@@ -8,7 +8,7 @@ const cors =require ('cors')
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: 'https://perpuson.vercel.app',
     methods: ["GET", "POST", "DELETE","PUT"],
     credentials: true,
   })
