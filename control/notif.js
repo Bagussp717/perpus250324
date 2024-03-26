@@ -19,7 +19,7 @@ const Notification = (req, res) => {
 }
 
 const TambahNotif = (kode_transaksi, namaPeminjam, judulBuku, jumlahPinjam) => {
-  const message = `Peminjam ${namaPeminjam} sedang megajukan peminjaman Buku ${judulBuku} sebanjak ${jumlahPinjam}`
+  const message = `Peminjam ${namaPeminjam} sedang megajukan peminjaman Buku ${judulBuku} sebanyak ${jumlahPinjam}`
   const pesanTele = `*Reservasi Baru* :
   Judul Buku  : *${judulBuku}*
   Nama Peminjam : *${namaPeminjam}*
