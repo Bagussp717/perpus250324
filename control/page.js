@@ -1067,15 +1067,10 @@ const searchPinjam = (req, res) =>{
   OR nama LIKE '%${query}%'
   OR tahun_terbit LIKE '%${query}%'
   OR no_induk LIKE '%${query}%'`
-  if (req.user.role == 'admin'){
-    db.query(isiQuery, (err, results)=>{
+      db.query(isiQuery, (err, results)=>{
         if(err) throw err
         res.send(results)
     })
-      
-  }else {
-    res.status(403).send('Akses ditolak');
-}
 }
 const searchPinjamUser = (req, res) =>{
   const query = req.query.s
