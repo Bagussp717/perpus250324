@@ -28,8 +28,6 @@ const TambahNotif = (kode_transaksi, namaPeminjam, judulBuku, jumlahPinjam) => {
 
   const query =
     "INSERT INTO notifications (message, kode_transaksi) VALUES (?,?)";
-
-    if (req.user.role == 'admin'){
       db.query(
         query,
         [
@@ -48,9 +46,6 @@ const TambahNotif = (kode_transaksi, namaPeminjam, judulBuku, jumlahPinjam) => {
           BotTele(pesanTele)
         }
       );
-    }else {
-      res.status(403).send('Akses ditolak');
-  }
 
 };
 
