@@ -8,7 +8,7 @@ const { Tampilbuku, Tambahbuku, Editbuku, Hapusbuku,
     Tampiladmin, Tambahadmin, Editadmin, Hapusadmin,
     searchBook,searchSiswa, TampilbukuId, tampilIdPinjam, searchPinjam, searchKembali, 
     TampilKembaliId, TampilpinjamId, TampilSiswaId, TampilStokKembali, tampilIdKembali, 
-    tampilFilterTanggalPinjam, TampilAdminId, searchPinjamUser
+    tampilFilterTanggalPinjam, TampilAdminId, searchPinjamUser,SetujuPinjam
 
     } = require("../control/page");
 const {Notification,CountNotif, UpdateStatus, DetileNotif} = require ("../control/notif")
@@ -109,5 +109,7 @@ router.put('/readStatus/:kode',verifyToken,UpdateStatus)
 router.get('/count-notif',verifyToken,CountNotif)
 router.get('/detile/:kode',verifyToken,DetileNotif)
 router.get('/riwayat-user/:username',RiwayatUser)
+
+router.put('/statusPinjam/:status/:kode',SetujuPinjam)
 
 module.exports = router;
