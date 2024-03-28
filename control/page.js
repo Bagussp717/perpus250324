@@ -636,7 +636,7 @@ const TampilStokKembali = (req, res) => {
 
   if (filter == 'all-history'){
     query = `
-    SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, siswa.prodi, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali FROM peminjam_buku 
+    SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, siswa.prodi, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali, status_pinjam FROM peminjam_buku 
     LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
     LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
     LEFT JOIN pengembalian ON peminjam_buku.id = pengembalian.id_transaksi 
@@ -645,7 +645,7 @@ const TampilStokKembali = (req, res) => {
   `;
   } else if (filter =='red-history' ){
     query = `
-    SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, siswa.prodi, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali FROM peminjam_buku 
+    SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, siswa.prodi, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali, status_pinjam FROM peminjam_buku 
     LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
     LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
     LEFT JOIN pengembalian ON peminjam_buku.id = pengembalian.id_transaksi
