@@ -1096,11 +1096,36 @@ const searchPinjamUser = (req, res) =>{
     })
 }
 
+const SetujuPinjam = (req,res) =>{
+  const kode_transaksi = req.params.kode
+  const statusPinjam = req.params.status
+
+  let query
+
+  if (statusPinjam === 'setuju'){
+    query = `UPDATE peminjam_buku SET status_pinjam = 1 WHERE kode_transaksi = '${kode_transaksi}'`
+  }else if(statusPinjam === 'tidak-setuju'){
+    query = `UPDATE peminjam_buku SET status_pinjam = 0 WHERE kode_transaksi = '${kode_transaksi}'`
+  }
+
+    db.query(query, (err,result)=>{
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+      }else{
+        res.status(200).send(result)
+        console.log('Notifikasi Telah di buka')
+      }
+    })
+
+  }
+
 
 module.exports = { Tampilbuku, Tambahbuku, Editbuku, Hapusbuku,TampilbukuId,
                   Tampilsiswa, EditSiswa,Hapussiswa,TampilSiswaId,
                   Tampilpinjam, Tambahpinjam, Editpinjam, Hapuspinjam,tampilIdPinjam,TampilpinjamId,tampilFilterTanggalPinjam,
                   Tampilkembali, Tambahkembali, Editkembali, Hapuskembali,tampilIdKembali,TampilKembaliId,TampilStokKembali,
                   Tampiladmin, TampilAdminId, Tambahadmin, Editadmin, Hapusadmin,
-                  searchBook,searchSiswa,searchPinjam,searchPinjamUser,searchKembali,TampilSiswaUser
+                  searchBook,searchSiswa,searchPinjam,searchPinjamUser,searchKembali,TampilSiswaUser,
+                  SetujuPinjam
                   };
