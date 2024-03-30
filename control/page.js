@@ -392,6 +392,7 @@ const Tambahpinjam = (req, res) => {
       no_induk,
       kode_buku,
       jumlah_pinjam,
+      status_pinjam,
       tanggal_pinjam,
       tanggal_kembali
 
@@ -433,7 +434,7 @@ const Tambahpinjam = (req, res) => {
   })
 
   const queryInsert =
-    "INSERT INTO peminjam_buku ( kode_transaksi, id_siswa, id_buku, jumlah_pinjam, tanggal_pinjam, tanggal_kembali ) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO peminjam_buku ( kode_transaksi, id_siswa, id_buku, status_pinjam, jumlah_pinjam, tanggal_pinjam, tanggal_kembali ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   const queryUpdateStok =
     "UPDATE buku SET stok = stok - ? WHERE kode_buku = ?";
@@ -475,6 +476,7 @@ const Tambahpinjam = (req, res) => {
           [kode_transaksi,
             id_siswa,
             id_buku,
+            status_pinjam,
             jumlah_pinjam,
             tanggal_pinjam,
             tanggal_kembali],
