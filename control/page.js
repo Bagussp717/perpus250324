@@ -1022,21 +1022,18 @@ const searchBook = (req, res) =>{
 
 const searchSiswa = (req, res) =>{
   const query = req.query.s
-  console.log(query)
   const isiQuery = `SELECT * FROM siswa 
   WHERE nama LIKE '%${query}%' OR 
   no_induk LIKE '%${query}%' OR
   prodi LIKE '%${query}%'`
-  if (req.user.role == 'admin'){
+
     db.query(isiQuery, (err, results)=>{
         if(err) throw err
         res.send(results)
     })
       
-  }else {
-    res.status(403).send('Akses ditolak');
-}
-}
+  }
+
 
 const searchKembali = (req, res) =>{
   const query = req.query.s
