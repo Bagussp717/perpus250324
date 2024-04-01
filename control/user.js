@@ -11,7 +11,7 @@ const RiwayatUser = (req,res) => {
         } else {
             res.set('Access-Control-Allow-Origin', '*')
 
-            const queryHistoryUser = `SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali FROM peminjam_buku 
+            const queryHistoryUser = `SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali, status_pinjam FROM peminjam_buku 
             LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
             LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
             LEFT JOIN pengembalian ON peminjam_buku.id = pengembalian.id_transaksi
