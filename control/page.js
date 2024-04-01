@@ -950,14 +950,14 @@ const Tambahadmin = (req, res) => {
 const Editadmin = (req, res) => {
   const id = req.params.id;
   const {
-    username, password	
+    username, password, chatId	
   } = req.body;
 
   const salt = generateSalt();
   const pepper = 'sparta';  
   const hashedPassword = hashPassword(password, salt, pepper);
 
-  const kueri = `UPDATE admin SET username = '${username}',password = '${hashedPassword}',salt = '${salt}', pepper = '${pepper}'  WHERE username = '${id}' `;
+  const kueri = `UPDATE admin SET chatId ='${chatId}' username = '${username}',password = '${hashedPassword}',salt = '${salt}', pepper = '${pepper}'  WHERE username = '${id}' `;
   if (req.user.role == 'admin'){
     db.query(kueri, (err, results) => {
       if (err) {
