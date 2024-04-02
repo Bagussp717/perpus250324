@@ -327,7 +327,6 @@ const TampilpinjamId = (req, res) => {
   LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
   LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
   LEFT JOIN pengembalian ON peminjam_buku.id = pengembalian.id_transaksi WHERE kode_transaksi = '${kode}'`
-  if (req.user.role == 'admin'){
     db.query( isikueri, (err, results) => {
         if(err){
             throw err;
@@ -338,10 +337,7 @@ const TampilpinjamId = (req, res) => {
         }
     });
       
-  }else {
-    res.status(403).send('Akses ditolak');
-}
-}
+  }
 
 const tampilFilterTanggalPinjam = (req, res) => {
   const { startDate, endDate } = req.body;  
