@@ -615,7 +615,6 @@ const TampilKembaliId = (req, res) => {
   const id = req.params.id
   const isikueri = `SELECT peminjam_buku.kode_transaksi, pengembalian.jumlah_kembali, pengembalian.tanggal_kembali FROM pengembalian
   LEFT JOIN peminjam_buku ON pengembalian.id_transaksi = peminjam_buku.id WHERE id_pengembalian = '${id}'`
-  if (req.user.role == 'admin'){
     db.query( isikueri, (err, results) => {
         if(err){
             throw err;
@@ -626,10 +625,7 @@ const TampilKembaliId = (req, res) => {
         }
     });
       
-  }else {
-    res.status(403).send('Akses ditolak');
-}
-}
+  }
 
 const TampilStokKembali = (req, res) => {
   const filter = req.params.id
