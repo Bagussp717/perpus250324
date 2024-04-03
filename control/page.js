@@ -572,7 +572,10 @@ const Hapuspinjam = (req, res) => {
 // Contorll Kembali
 const Tampilkembali = (req, res) => {
   if (req.user.role == 'admin'){
-    db.query("SELECT peminjam_buku.kode_transaksi, pengembalian.jumlah_kembali, pengembalian.tanggal_kembali, id_pengembalian FROM pengembalian LEFT JOIN peminjam_buku ON pengembalian.id_transaksi = peminjam_buku.id", (err, results) => {
+    db.query(`SELECT peminjam_buku.kode_transaksi, pengembalian.jumlah_kembali, pengembalian.tanggal_kembali, siswa.no_induk, siswa.nama, siswa.prodi, buku.kode_buku, buku.judul_buku, peminjam_buku.jumlah_pinjam, peminjam_buku.tanggal_pinjam, id_pengembalian FROM pengembalian 
+LEFT JOIN peminjam_buku ON pengembalian.id_transaksi = peminjam_buku.id
+LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
+LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id`, (err, results) => {
       if (err) {
         throw err;
       } else {
