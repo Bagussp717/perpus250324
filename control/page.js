@@ -1118,12 +1118,18 @@ const Getme = ( req, res ) => {
   role = req.user.role
    if(role == 'admin'){
     const location = '/admin/home'
-    res.send(location)
+    res.json({
+              roleToken: role,
+              redirectUrl: location
+            });
   }else if(role =='user'){
     const query = `SELECT no_induk FROM siswa WHERE username = '${req.user.username}'`
     db.query(query,(err,result) =>{
         const location = `/${result[0].no_induk}/buku/daftarbuku`
-        res.send(location)
+            res.json({
+              roleToken: role,
+              redirectUrl: location
+            });
     });
   }
 
