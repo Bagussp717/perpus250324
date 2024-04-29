@@ -1110,7 +1110,7 @@ const SetujuPinjam = (req,res) =>{
         console.error(err);
         res.status(500).send("Internal Server Error");
       }else{
-           db.query(query, (err,result)=>{
+           db.query(queryNotif, (err,result)=>{
               if (err) {
                 console.error(err);
                 res.status(500).send("Internal Server Error");
