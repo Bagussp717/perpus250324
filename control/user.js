@@ -30,4 +30,20 @@ const RiwayatUser = (req,res) => {
 
 }
 
-module.exports = {RiwayatUser}
+const NotifUser = (req,res)=>{
+    const username = req.params.username
+    const query =  `SELECT mesage_user FROM notifications 
+    LEFT JOIN peminjam_buku ON notifications.kode_transaksi = peminjam_buku.kode_transaksi 
+    LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id WHERE siswa.nama = "${username}"`
+    db.query(query, (err,result)=>{
+    if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }else{
+        res.status(200).send(result)
+    }
+    })
+}
+
+
+module.exports = {RiwayatUser,NotifUser}
