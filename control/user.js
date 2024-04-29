@@ -34,7 +34,7 @@ const NotifUser = (req,res)=>{
     const username = req.params.username
     const query =  `SELECT mesage_user FROM notifications 
     LEFT JOIN peminjam_buku ON notifications.kode_transaksi = peminjam_buku.kode_transaksi 
-    LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id WHERE siswa.nama = "${username}"`
+    LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id WHERE siswa.no_induk = "${username}"`
     db.query(query, (err,result)=>{
     if (err) {
         console.error(err);
