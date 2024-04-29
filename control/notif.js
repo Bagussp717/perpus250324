@@ -84,6 +84,26 @@ const UpdateStatus = (req,res) =>{
  
 }
 
+const UpdateReadStatus = (req,res) =>{
+  const kode_transaksi = req.params.kode
+
+  const query = `UPDATE notifications SET read_status_user = 1 WHERE kode_transaksi = '${kode_transaksi}'`
+  if (req.user.role == 'user'){
+    db.query(query, (err,result)=>{
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+      }else{
+        res.status(200).send(result)
+        console.log('Notifikasi Telah di buka')
+      }
+    })
+  }else {
+    res.status(403).send('Akses ditolak');
+}
+ 
+}
+
 const DetileNotif = (req,res) => {
   const kode_transaksi = req.params.kode
   const query = `SELECT kode_transaksi, buku.kode_buku, buku.judul_buku, buku.pengarang, buku.penerbit, buku.tahun_terbit, siswa.no_induk, siswa.nama, siswa.prodi, jumlah_pinjam, pengembalian.jumlah_kembali, tanggal_pinjam, peminjam_buku.tanggal_kembali FROM peminjam_buku 
@@ -105,4 +125,4 @@ const DetileNotif = (req,res) => {
 }
 
 }
-module.exports = {Notification, CountNotif, TambahNotif, UpdateStatus, DetileNotif}
+module.exports = {Notification, CountNotif, TambahNotif, UpdateStatus, DetileNotif, UpdateReadStatus}
