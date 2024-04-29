@@ -1097,9 +1097,9 @@ const SetujuPinjam = (req,res) =>{
   let query
 
   if (statusPinjam === 'setuju'){
-    query = `UPDATE peminjam_buku SET status_pinjam = 1 WHERE kode_transaksi = '${kode_transaksi}'`
+    query = `UPDATE peminjam_buku SET status_pinjam = 1, mesage_user = 'Buku dengan kode peminjaman ${kode_transaksi} sudah di siapkan' WHERE kode_transaksi = '${kode_transaksi}'`
   }else if(statusPinjam === 'tidak-setuju'){
-    query = `UPDATE peminjam_buku SET status_pinjam = 0 WHERE kode_transaksi = '${kode_transaksi}'`
+    query = `UPDATE peminjam_buku SET status_pinjam = 0, mesage_user = 'Buku dengan kode peminjaman ${kode_transaksi} di tolak admin' WHERE kode_transaksi = '${kode_transaksi}'`
   }
 
     db.query(query, (err,result)=>{
