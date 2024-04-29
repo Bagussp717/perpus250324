@@ -12,7 +12,7 @@ const { Tampilbuku, Tambahbuku, Editbuku, Hapusbuku,
 
     } = require("../control/page");
 const {Notification,CountNotif, UpdateStatus, DetileNotif} = require ("../control/notif")
-const {RiwayatUser} = require ("../control/user")
+const {RiwayatUser,NotifUser} = require ("../control/user")
 
 const jwt =require('jsonwebtoken');
 require("dotenv").config();
@@ -109,6 +109,7 @@ router.put('/readStatus/:kode',verifyToken,UpdateStatus)
 router.get('/count-notif',verifyToken,CountNotif)
 router.get('/detile/:kode',verifyToken,DetileNotif)
 router.get('/riwayat-user/:username',RiwayatUser)
+router.get('/notifUser/:username',NotifUser)
 
 router.put('/statusPinjam/:status/:kode',SetujuPinjam)
 
