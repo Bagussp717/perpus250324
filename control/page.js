@@ -9,6 +9,7 @@ const Tampilbuku = (req, res) => {
   db.query("SELECT * FROM buku", (err, results) => {
     if (err) {
       throw err;
+      console.log("Data kueri tidak ada")
     } else {
       console.log("Data kueri buku : \n", results);
       res.set("Access-Control-Allow-Origin", "*");
