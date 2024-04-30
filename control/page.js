@@ -437,6 +437,8 @@ const Tambahpinjam = (req, res) => {
 
   const queryCheckStok =
     "SELECT stok FROM buku WHERE kode_buku = ?";
+  const queryWaitacc = 
+    "UPDATE notifications SET mesage_user = 'Buku masih disiapkan' WHERE kode_transaksi = ?"
 
   db.query(
     queryCheckStok,
@@ -488,7 +490,7 @@ const Tambahpinjam = (req, res) => {
             const insertedId = result.insertId;
             console.log("Data Sukses di Inputkan ke MySQL dengan ID: " + insertedId);
             TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
-
+            
             db.query(
               queryUpdateStok,
               [jumlah_pinjam, kode_buku],
@@ -509,6 +511,19 @@ const Tambahpinjam = (req, res) => {
                     });
                     return;
                   }
+
+                  db.query(
+                    queryWaitacc,[kode_transaksi],(err, result) => {
+                        if (err) {
+                            throw err;
+                          } else {
+                            console.log(result);
+                            res.set("Access-Control-Allow-Origin", "*");
+                            res.send("Peminjaman berhasil di hapus!");
+                          }
+                    }
+                    
+                  )
 
                   console.log("Stok buku berhasil diupdate.");
                   res.status(200).send("Upload success");
@@ -1089,6 +1104,7 @@ const searchPinjamUser = (req, res) =>{
     })
     })
 }
+
 
 const SetujuPinjam = (req,res) =>{
   const kode_transaksi = req.params.kode
