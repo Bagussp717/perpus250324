@@ -40,6 +40,7 @@ const NotifUser = (req,res)=>{
         console.error(err);
         res.status(500).send("Internal Server Error");
     }else{
+        res.set('Access-Control-Allow-Origin', '*')
         res.status(200).send(result)
     }
     })
