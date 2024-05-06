@@ -1051,15 +1051,11 @@ const searchKembali = (req, res) =>{
   console.log(query)
   const isiQuery = `SELECT * FROM pengembalian
   WHERE id_pengembalian LIKE '%${query}%'`
-  if (req.user.role == 'admin'){
     db.query(isiQuery, (err, results)=>{
         if(err) throw err
         res.send(results)
     })
-      
-  }else {
-    res.status(403).send('Akses ditolak');
-}
+  
 }
 
 const searchPinjam = (req, res) =>{
