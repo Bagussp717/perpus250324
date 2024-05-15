@@ -491,10 +491,10 @@ const Tambahpinjam = (req, res) => {
               });
               return;
             }
-
+            TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
             const insertedId = result.insertId;
             console.log("Data Sukses di Inputkan ke MySQL dengan ID: " + insertedId);
-            TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
+            
             
             db.query(
               queryUpdateStok,
