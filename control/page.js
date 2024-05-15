@@ -442,8 +442,6 @@ const Tambahpinjam = (req, res) => {
 
   const queryCheckStok =
     "SELECT stok FROM buku WHERE kode_buku = ?";
-  const queryWaitacc = 
-    "UPDATE notifications SET mesage_user = 'Buku masih disiapkan' WHERE kode_transaksi = ?"
 
   db.query(
     queryCheckStok,
@@ -491,11 +489,11 @@ const Tambahpinjam = (req, res) => {
               });
               return;
             }
-            TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
+
             const insertedId = result.insertId;
             console.log("Data Sukses di Inputkan ke MySQL dengan ID: " + insertedId);
-            
-            
+            TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
+
             db.query(
               queryUpdateStok,
               [jumlah_pinjam, kode_buku],
@@ -517,19 +515,6 @@ const Tambahpinjam = (req, res) => {
                     return;
                   }
 
-                  db.query(
-                    queryWaitacc,[kode_transaksi],(err, result) => {
-                        if (err) {
-                            throw err;
-                          } else {
-                            console.log(result);
-                            res.set("Access-Control-Allow-Origin", "*");
-                            res.send("Peminjaman berhasil di hapus!");
-                          }
-                    }
-                    
-                  )
-
                   console.log("Stok buku berhasil diupdate.");
                   res.status(200).send("Upload success");
                 });
@@ -541,6 +526,161 @@ const Tambahpinjam = (req, res) => {
     }
   );
 };
+
+// const Tambahpinjam = (req, res) => {
+//   const {
+//       kode_transaksi,
+//       no_induk,
+//       kode_buku,
+//       jumlah_pinjam,
+//       status_pinjam,
+//       tanggal_pinjam,
+//       tanggal_kembali
+
+//   } = req.body;
+
+//   const query_IdBuku = `SELECT id,judul_buku FROM buku WHERE kode_buku ='${kode_buku}'`
+//   let id_buku
+//   let judulBuku
+//   db.query(query_IdBuku,(err,results) =>{
+//     if (err) {
+//       console.error("Error saat memeriksa buku: " + err.stack);
+//         res.status(500).send("Internal Server Error");
+//     } else {
+//       if (results.length > 0) {
+//         id_buku = results[0].id;
+//         judulBuku = results[0].judul_buku;
+//       } else {
+//         console.error('Student not found with the given student ID:', no_induk);
+//       }
+//       return
+//     }
+//   })
+//   const query_IdSiswa = `SELECT id,nama FROM siswa WHERE no_induk ='${no_induk}'`
+//   let id_siswa
+//   let namaPeminjam
+//   db.query(query_IdSiswa,(err,results) =>{
+//     if (err) {
+//       console.error("Error saat memeriksa Data Peminjam: " + err.stack);
+//         res.status(500).send("Internal Server Error");
+//     } else {
+//       if (results.length > 0) {
+//         id_siswa = results[0].id;
+//         namaPeminjam = results[0].nama;
+//       } else {
+//         console.error('Student not found with the given student ID:', no_induk);
+//       }
+//       return
+//     }
+//   })
+
+//   const queryInsert =
+//     "INSERT INTO peminjam_buku ( kode_transaksi, id_siswa, id_buku, status_pinjam, jumlah_pinjam, tanggal_pinjam, tanggal_kembali ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+//   const queryUpdateStok =
+//     "UPDATE buku SET stok = stok - ? WHERE kode_buku = ?";
+
+//   const queryCheckStok =
+//     "SELECT stok FROM buku WHERE kode_buku = ?";
+//   const queryWaitacc = 
+//     "UPDATE notifications SET mesage_user = 'Buku masih disiapkan' WHERE kode_transaksi = ?"
+
+//   db.query(
+//     queryCheckStok,
+//     [kode_buku],
+//     (err, result) => {
+//       if (err) {
+//         console.error("Error saat memeriksa stok buku: " + err.stack);
+//         res.status(500).send("Internal Server Error");
+//         return;
+//       }
+
+//       if (result.length === 0) { // Tidak ada buku dengan kode_buku yang diberikan
+//         res.status(404).send([{message:"Buku tidak ditemukan"}]);
+//         return;
+//       }
+
+//       const stokBuku = result[0].stok;
+
+//       if (stokBuku < jumlah_pinjam) {
+//         res.status(400).send([{message:"Stok buku tidak mencukupi"}]);
+//         return;
+//       }
+
+//       db.beginTransaction((err) => {
+//         if (err) {
+//           console.error("Error saat memulai transaksi: " + err.stack);
+//           res.status(500).send("Internal Server Error");
+//           return;
+//         }
+
+//         db.query(
+//           queryInsert,
+//           [kode_transaksi,
+//             id_siswa,
+//             id_buku,
+//             status_pinjam,
+//             jumlah_pinjam,
+//             tanggal_pinjam,
+//             tanggal_kembali],
+//           (err, result) => {
+//             if (err) {
+//               db.rollback(() => {
+//                 console.error("Error Input data ke MySQL: " + err.stack);
+//                 res.status(500).send([{message:"Data Tidak Peminjaman Sesuai"}]);
+//               });
+//               return;
+//             }
+//             TambahNotif(kode_transaksi, namaPeminjam, judulBuku, jumlah_pinjam)
+//             const insertedId = result.insertId;
+//             console.log("Data Sukses di Inputkan ke MySQL dengan ID: " + insertedId);
+            
+            
+//             db.query(
+//               queryUpdateStok,
+//               [jumlah_pinjam, kode_buku],
+//               (err, result) => {
+//                 if (err) {
+//                   db.rollback(() => {
+//                     console.error("Error mengupdate stok buku: " + err.stack);
+//                     res.status(500).send("Internal Server Error");
+//                   });
+//                   return;
+//                 }
+
+//                 db.commit((err) => {
+//                   if (err) {
+//                     db.rollback(() => {
+//                       console.error("Error saat melakukan commit: " + err.stack);
+//                       res.status(500).send("Internal Server Error");
+//                     });
+//                     return;
+//                   }
+
+//                   db.query(
+//                     queryWaitacc,[kode_transaksi],(err, result) => {
+//                         if (err) {
+//                             throw err;
+//                           } else {
+//                             console.log(result);
+//                             res.set("Access-Control-Allow-Origin", "*");
+//                             res.send("Peminjaman berhasil di hapus!");
+//                           }
+//                     }
+                    
+//                   )
+
+//                   console.log("Stok buku berhasil diupdate.");
+//                   res.status(200).send("Upload success");
+//                 });
+//               }
+//             );
+//           }
+//         );
+//       });
+//     }
+//   );
+// };
 
 const Editpinjam = (req, res) => {
   const id = req.params.id;
