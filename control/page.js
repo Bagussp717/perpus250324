@@ -1052,11 +1052,17 @@ const searchSiswa = (req, res) =>{
 
 const searchKembali = (req, res) =>{
   const query = req.query.s
-db.query(`SELECT peminjam_buku.kode_transaksi, pengembalian.jumlah_kembali, pengembalian.tanggal_kembali, siswa.no_induk, siswa.nama, siswa.prodi, buku.kode_buku, buku.judul_buku, peminjam_buku.jumlah_pinjam, peminjam_buku.tanggal_pinjam, id_pengembalian FROM pengembalian 
+  const queryKodeTransaksi = `SELECT * FROM peminjam_buku`
+  db.query( queryKodeTransaksi , (err, results) => {
+      if (err) {
+        throw err;
+      } else {
+        const kodeTransaksi = results[0].id
+        db.query(`SELECT peminjam_buku.kode_transaksi, pengembalian.jumlah_kembali, pengembalian.tanggal_kembali, siswa.no_induk, siswa.nama, siswa.prodi, buku.kode_buku, buku.judul_buku, peminjam_buku.jumlah_pinjam, peminjam_buku.tanggal_pinjam, id_pengembalian FROM pengembalian 
 LEFT JOIN peminjam_buku ON pengembalian.id_transaksi = peminjam_buku.id
 LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
 LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
-WHERE pengembalian.id_transaksi LIKE '%${query}%'`
+WHERE pengembalian.id_transaksi LIKE '%${kodeTransaksi}%'`
          , (err, results) => {
       if (err) {
         throw err;
@@ -1064,6 +1070,8 @@ WHERE pengembalian.id_transaksi LIKE '%${query}%'`
         console.log("Data kueri Pengembalian : \n", results);
         res.set("Access-Control-Allow-Origin", "*");
         res.send(results);
+      }
+    });
       }
     });
   
