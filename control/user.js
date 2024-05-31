@@ -15,7 +15,8 @@ const RiwayatUser = (req,res) => {
             LEFT JOIN buku ON peminjam_buku.id_buku = buku.id 
             LEFT JOIN siswa ON peminjam_buku.id_siswa = siswa.id
             LEFT JOIN pengembalian ON peminjam_buku.id = pengembalian.id_transaksi
-            WHERE siswa.nama = "${results[0].nama}"`
+            WHERE siswa.nama = "${results[0].nama}"
+            ORDER BY tanggal_pinjam DESC`
         
             db.query(queryHistoryUser,(err, results) => {
                 if(err){
